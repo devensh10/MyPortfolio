@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { ExternalLink, Github, Eye, Palette, Smartphone, Layers, Globe, Utensils } from 'lucide-react';
 import AnimatedSection from '../AnimatedSection';
+import MasonryGallery from '../gallery/MasonryGallery';
 
 const ProjectsSection: React.FC = () => {
   const graphicalProjects = [
@@ -10,21 +11,24 @@ const ProjectsSection: React.FC = () => {
       title: 'Brand Identity Design',
       description: 'Complete brand identity package for a tech startup',
       category: 'Branding',
-      icon: Palette
+      icon: Palette,
+      image: 'https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=800'
     },
     {
       id: 2,
       title: 'UI/UX Mobile App',
       description: 'Modern mobile app design with intuitive user experience',
       category: 'Mobile Design',
-      icon: Smartphone
+      icon: Smartphone,
+      image: 'https://images.pexels.com/photos/147413/twitter-facebook-together-exchange-of-information-147413.jpeg?auto=compress&cs=tinysrgb&w=800'
     },
     {
       id: 3,
       title: 'Web Design System',
       description: 'Comprehensive design system for enterprise platform',
       category: 'Design Systems',
-      icon: Layers
+      icon: Layers,
+      image: 'https://images.pexels.com/photos/270348/pexels-photo-270348.jpeg?auto=compress&cs=tinysrgb&w=800'
     }
   ];
 
@@ -35,7 +39,8 @@ const ProjectsSection: React.FC = () => {
       description: 'Full-stack e-commerce solution with React and Node.js',
       tech: ['React', 'Node.js', 'MongoDB', 'Stripe'],
       github: 'https://github.com',
-      live: 'https://example.com'
+      live: 'https://example.com',
+      image: 'https://images.pexels.com/photos/230544/pexels-photo-230544.jpeg?auto=compress&cs=tinysrgb&w=800'
     },
     {
       id: 2,
@@ -43,7 +48,8 @@ const ProjectsSection: React.FC = () => {
       description: 'Collaborative task management tool with real-time updates',
       tech: ['Next.js', 'TypeScript', 'Prisma', 'PostgreSQL'],
       github: 'https://github.com',
-      live: 'https://example.com'
+      live: 'https://example.com',
+      image: 'https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=800'
     },
     {
       id: 3,
@@ -51,7 +57,8 @@ const ProjectsSection: React.FC = () => {
       description: 'Modern chat interface with AI integration',
       tech: ['React', 'Python', 'FastAPI', 'OpenAI'],
       github: 'https://github.com',
-      live: 'https://example.com'
+      live: 'https://example.com',
+      image: 'https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&w=800'
     }
   ];
 
@@ -61,15 +68,23 @@ const ProjectsSection: React.FC = () => {
       title: 'Creative Agency Website',
       description: 'Award-winning creative agency portfolio',
       url: 'https://example.com',
-      icon: Globe
+      icon: Globe,
+      image: 'https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=800'
     },
     {
       id: 2,
       title: 'Restaurant Chain Website',
       description: 'Multi-location restaurant website with online ordering',
       url: 'https://example.com',
-      icon: Utensils
+      icon: Utensils,
+      image: 'https://images.pexels.com/photos/958545/pexels-photo-958545.jpeg?auto=compress&cs=tinysrgb&w=800'
     }
+  ];
+
+  const allProjects = [
+    ...graphicalProjects.map(p => ({ ...p, type: 'graphical' })),
+    ...codingProjects.map(p => ({ ...p, type: 'coding' })),
+    ...websites.map(p => ({ ...p, type: 'website' }))
   ];
 
   const containerVariants = {
@@ -95,6 +110,18 @@ const ProjectsSection: React.FC = () => {
   return (
     <section id="projects" className="py-20 bg-gray-50 dark:bg-gray-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Portfolio Gallery */}
+        <AnimatedSection direction="up">
+          <h2 className="text-4xl md:text-5xl font-bold text-center text-gray-900 dark:text-white mb-4">
+            Portfolio Gallery
+          </h2>
+          <p className="text-xl text-gray-600 dark:text-gray-300 text-center mb-16 max-w-3xl mx-auto">
+            A curated collection of my work across different disciplines and technologies
+          </p>
+        </AnimatedSection>
+
+        <MasonryGallery projects={allProjects} />
+
         {/* Graphical Projects */}
         <AnimatedSection direction="right">
           <h2 className="text-4xl md:text-5xl font-bold text-center text-gray-900 dark:text-white mb-16">
@@ -113,13 +140,25 @@ const ProjectsSection: React.FC = () => {
             <motion.div
               key={project.id}
               variants={itemVariants}
-              whileHover={{ y: -8, scale: 1.02 }}
+              whileHover={{ 
+                y: -8, 
+                scale: 1.02,
+                rotateX: 5,
+                rotateY: 5,
+                z: 50
+              }}
+              style={{ transformStyle: 'preserve-3d' }}
               className="bg-white dark:bg-gray-900 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200 dark:border-gray-700"
             >
-              <div className="aspect-video bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 flex items-center justify-center">
+              <div className="aspect-video bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 flex items-center justify-center relative overflow-hidden">
+                <img 
+                  src={project.image} 
+                  alt={project.title}
+                  className="absolute inset-0 w-full h-full object-cover opacity-20"
+                />
                 <motion.div
                   whileHover={{ scale: 1.1, rotate: 5 }}
-                  className="p-8"
+                  className="p-8 relative z-10"
                 >
                   <project.icon className="w-16 h-16 text-blue-600 dark:text-blue-400" />
                 </motion.div>
@@ -165,9 +204,23 @@ const ProjectsSection: React.FC = () => {
             <motion.div
               key={project.id}
               variants={itemVariants}
-              whileHover={{ y: -8, scale: 1.02 }}
+              whileHover={{ 
+                y: -8, 
+                scale: 1.02,
+                rotateX: 5,
+                rotateY: 5,
+                z: 50
+              }}
+              style={{ transformStyle: 'preserve-3d' }}
               className="bg-white dark:bg-gray-900 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200 dark:border-gray-700"
             >
+              <div className="aspect-video bg-gradient-to-br from-green-50 to-blue-50 dark:from-green-900/20 dark:to-blue-900/20 rounded-lg mb-4 relative overflow-hidden">
+                <img 
+                  src={project.image} 
+                  alt={project.title}
+                  className="absolute inset-0 w-full h-full object-cover opacity-30"
+                />
+              </div>
               <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
                 {project.title}
               </h3>
@@ -224,13 +277,25 @@ const ProjectsSection: React.FC = () => {
             <motion.div
               key={website.id}
               variants={itemVariants}
-              whileHover={{ y: -8, scale: 1.02 }}
+              whileHover={{ 
+                y: -8, 
+                scale: 1.02,
+                rotateX: 5,
+                rotateY: 5,
+                z: 50
+              }}
+              style={{ transformStyle: 'preserve-3d' }}
               className="bg-white dark:bg-gray-900 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200 dark:border-gray-700"
             >
-              <div className="aspect-video bg-gradient-to-br from-green-50 to-blue-50 dark:from-green-900/20 dark:to-blue-900/20 flex items-center justify-center">
+              <div className="aspect-video bg-gradient-to-br from-green-50 to-blue-50 dark:from-green-900/20 dark:to-blue-900/20 flex items-center justify-center relative overflow-hidden">
+                <img 
+                  src={website.image} 
+                  alt={website.title}
+                  className="absolute inset-0 w-full h-full object-cover opacity-20"
+                />
                 <motion.div
                   whileHover={{ scale: 1.1, rotate: 5 }}
-                  className="p-8"
+                  className="p-8 relative z-10"
                 >
                   <website.icon className="w-16 h-16 text-green-600 dark:text-green-400" />
                 </motion.div>
